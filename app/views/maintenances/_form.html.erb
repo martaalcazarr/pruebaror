@@ -1,47 +1,83 @@
-<%= form_with(model: maintenance) do |form| %>
-  <% if maintenance.errors.any? %>
+<%= form_with(model: @maintenance) do |form| %>
+  <% if @maintenance.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(maintenance.errors.count, "error") %> prohibited this maintenance from being saved:</h2>
+      <h2><%= pluralize(@maintenance.errors.count, "error") %> prohibited this maintenance from being saved:</h2>
 
       <ul>
-        <% maintenance.errors.each do |error| %>
+        <% @maintenance.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :motor_name, style: "display: block" %>
-    <%= form.text_field :motor_name %>
+  <div id="part1">
+    <h3>Parte 1: Seleccione el tipo de motor y mantenimiento</h3>
+
+    <div>
+      <%= form.label :equipment_type_id, "Elija el tipo de motor:", style: "display: block" %>
+      <%= form.collection_select :equipment_type_id, EquipmentType.all, :id, :name, { prompt: 'Seleccione un tipo de equipo' }, { id: 'equipment-type-select' } %>
+    </div>
+
+
+    <%= form.button "Continuar", type: "button", id: "next-button" %>
   </div>
 
-  <div>
-    <%= form.label :date, style: "display: block" %>
-    <%= form.date_field :date %>
-  </div>
+  <div id="part2" style="display: none;">
+    <h3>Parte 2: Complete los detalles</h3>
 
-  <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email %>
-  </div>
+    <!-- Aquí coloca los campos adicionales según la selección anterior -->
+    <div>
+  <%= form.label :motor_id, "Elija el nombre del motor:", style: "display: block" %>
+  <%= form.collection_select :motor_id, [], :id, :name, { prompt: 'Seleccione un motor' }, { id: 'motor-select' } %>
+</div>
+    <div>
+      <%= form.label :maintenance_type_id, "Elija el tipo de mantenimiento:", style: "display: block" %>
+      <%= form.collection_select :maintenance_type_id, MaintenanceType.all, :id, :name, { prompt: 'Seleccione un tipo de mantenimiento' }, { id: 'maintenance-type-select' } %>
+    </div>
 
-  <div>
-    <%= form.label :motor_id, style: "display: block" %>
-    <%= form.text_field :motor_id %>
-  </div>
+    <!-- Ejemplo: Date -->
+    <div>
+      <%= form.label :date, "Fecha:", style: "display: block" %>
+      <%= form.date_field :date %>
+    </div>
 
-  <div>
-    <%= form.label :maintenance_type_id, style: "display: block" %>
-    <%= form.text_field :maintenance_type_id %>
-  </div>
+    <!-- Ejemplo: Email -->
+    <div>
+      <%= form.label :email, "Correo Electrónico del Técnico:", style: "display: block" %>
+      <%= form.text_field :email %>
+    </div>
 
-  <div>
-    <%= form.label :city_id, style: "display: block" %>
-    <%= form.text_field :city_id %>
-  </div>
+    <!-- Otros campos según la selección -->
 
-  <div>
     <%= form.submit %>
   </div>
+</div>
 <% end %>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const equipmentTypeSelect = document.getElementById('equipment-type-select');
+  const motorSelect = document.getElementById('motor-select');
+  
+  // Define un objeto que mapea el tipo de equipo a los motores disponibles
+  const equipmentTypeToMotors = {
+    1: [<%= raw @motors_for_equipment_type_1.to_json %>], // Reemplaza con la lista real de motores
+    2: [<%= raw @motors_for_equipment_type_2.to_json %>], // Reemplaza con la lista real de motores
+    // Agrega más tipos de equipo y motores según sea necesario
+  };
+
+  // Función para actualizar las opciones del campo de selección de motores
+  function updateMotorOptions() {
+    const selectedEquipmentType = equipmentTypeSelect.value;
+    const motors = equipmentTypeToMotors[selectedEquipmentType] || [];
+    const optionsHtml = motors.map(motor => `<option value="${motor.id}">${motor.name}</option>`).join('');
+    motorSelect.innerHTML = `<option value="">Seleccione un motor</option>${optionsHtml}`;
+  }
+
+  // Escucha los cambios en el campo de selección de tipo de equipo
+  equipmentTypeSelect.addEventListener('change', updateMotorOptions);
+
+  // Llama a la función inicialmente para configurar las opciones iniciales
+  updateMotorOptions();
+});
+</script>

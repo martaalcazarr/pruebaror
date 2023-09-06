@@ -27,13 +27,9 @@
   </div>
 
   <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.text_field :user_id %>
-  </div>
-
-  <div>
     <%= form.label :equipment_type_id, style: "display: block" %>
-    <%= form.text_field :equipment_type_id %>
+<%= form.collection_select :equipment_type_id, EquipmentType.all, :id, :name, prompt: 'Seleccione un tipo de equipo' %>
+
   </div>
 
   <div>

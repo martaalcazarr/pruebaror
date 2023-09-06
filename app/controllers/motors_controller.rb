@@ -22,15 +22,12 @@ class MotorsController < ApplicationController
   # POST /motors or /motors.json
   def create
     @motor = Motor.new(motor_params)
+    @motor.user = current_user
 
-    respond_to do |format|
-      if @motor.save
-        format.html { redirect_to motor_url(@motor), notice: "Motor was successfully created." }
-        format.json { render :show, status: :created, location: @motor }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @motor.errors, status: :unprocessable_entity }
-      end
+    if @motor.save
+      redirect_to @motor, notice: 'Motor was successfully created.'
+    else
+      render :new
     end
   end
 
