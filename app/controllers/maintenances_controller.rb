@@ -1,5 +1,6 @@
 class MaintenancesController < ApplicationController
-  before_action :set_maintenance, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
+  before_action :check_permissions, except: [:index, :show]
 
   # GET /maintenances or /maintenances.json
   def index
@@ -8,6 +9,7 @@ class MaintenancesController < ApplicationController
 
   # GET /maintenances/1 or /maintenances/1.json
   def show
+    @maintenance = Maintenance.find(params[:id])
   end
 
   # GET /maintenances/new
@@ -64,6 +66,15 @@ class MaintenancesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_maintenance
       @maintenance = Maintenance.find(params[:id])
+    end
+
+    def check_permissions
+      if current_user.role == "administrador" || current_user.role == "operador"
+
+      else
+        flash[:error] = 'No tienes permiso para realizar esta acción.'
+        redirect_back(fallback_location: root_path)
+      end
     end
 
     # Only allow a list of trusted parameters through.

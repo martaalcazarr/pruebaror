@@ -1,5 +1,6 @@
 class MotorsController < ApplicationController
-  before_action :set_motor, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
+  before_action :check_permissions, except: [:index, :show]
 
   # GET /motors or /motors.json
   def index
@@ -8,6 +9,7 @@ class MotorsController < ApplicationController
 
   # GET /motors/1 or /motors/1.json
   def show
+    @motor = Motor.find(params[:id])
   end
 
   # GET /motors/new
@@ -58,6 +60,15 @@ class MotorsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_motor
       @motor = Motor.find(params[:id])
+    end
+
+    def check_permissions
+      if current_user.role == "administrador" 
+        
+      else
+        flash[:error] = 'No tienes permiso para realizar esta acción.'
+        redirect_back(fallback_location: root_path)
+      end
     end
 
     # Only allow a list of trusted parameters through.
