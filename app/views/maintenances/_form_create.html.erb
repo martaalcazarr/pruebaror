@@ -1,7 +1,6 @@
-
-<%= form_with(model: @maintenance) do |form| %>
+<%= form_with(model: @maintenance, html: { class: "needs-validation" }) do |form| %>
   <% if @maintenance.errors.any? %>
-    <div style="color: red">
+    <div class="alert alert-danger">
       <h2><%= pluralize(@maintenance.errors.count, "error") %> prohibited this maintenance from being saved:</h2>
 
       <ul>
@@ -12,48 +11,47 @@
     </div>
   <% end %>
 
-  <div id="part1">
-    <h3>Parte 1: Seleccione el tipo de motor y mantenimiento</h3>
+  <div id="part1" class="mb-3">
+    <h3>Parte 1: Seleccione el tipo de motor</h3>
 
-    <div>
-      <%= form.label :equipment_type_id, "Elija el tipo de motor:", style: "display: block" %>
-      <%= form.collection_select :equipment_type_id, EquipmentType.all, :id, :name, { prompt: 'Seleccione un tipo de equipo' }, { id: 'equipment-type-select' } %>
+    <div class="form-group">
+      <%= form.label :equipment_type_id, "Elija el tipo de motor:" %>
+      <%= form.collection_select :equipment_type_id, EquipmentType.all, :id, :name, { prompt: 'Seleccione un tipo de equipo' }, { id: 'equipment-type-select', class: 'form-control' } %>
     </div>
-
-    
   </div>
 
-  <div id="part2" style="display: none;">
+  <div id="part2" class="mb-3" style="display: none;">
     <h3>Parte 2: Complete los detalles</h3>
 
-    <div>
-      <%= form.label :motor_id, "Elija el nombre del motor:", style: "display: block" %>
-      <%= form.select :motor_id, {}, { prompt: 'Seleccione un motor' }, { id: 'motor-select' } %>
+    <div class="form-group">
+      <%= form.label :motor_id, "Elija el nombre del motor:" %>
+      <%= form.select :motor_id, {}, { prompt: 'Seleccione un motor' }, { id: 'motor-select', class: 'form-control' } %>
     </div>
 
-    <div>
-      <%= form.label :maintenance_type_id, "Elija el tipo de mantenimiento:", style: "display: block" %>
-      <%= form.collection_select :maintenance_type_id, MaintenanceType.all, :id, :name, { prompt: 'Seleccione un tipo de mantenimiento' }, { id: 'maintenance-type-select' } %>
+    <div class="form-group">
+      <%= form.label :maintenance_type_id, "Elija el tipo de mantenimiento:" %>
+      <%= form.collection_select :maintenance_type_id, MaintenanceType.all, :id, :name, { prompt: 'Seleccione un tipo de mantenimiento' }, { id: 'maintenance-type-select', class: 'form-control' } %>
     </div>
 
     <!-- Ejemplo: Date -->
-    <div>
-      <%= form.label :date, "Fecha:", style: "display: block" %>
-      <%= form.date_field :date %>
+    <div class="form-group">
+      <%= form.label :date, "Fecha:" %>
+      <%= form.date_field :date, class: 'form-control' %>
     </div>
-<div>
-  <%= form.label :city_id, "Elija la ciudad:", style: "display: block" %>
-  <%= form.collection_select :city_id, City.all, :id, :name, { prompt: 'Seleccione una ciudad' }, { id: 'city-select' } %>
-</div>
-    <!-- Ejemplo: Email -->
-    <div>
-      <%= form.label :email, "Correo Electrónico del Técnico:", style: "display: block" %>
-      <%= form.text_field :email %>
+
+    <div class="form-group">
+      <%= form.label :email, "Correo Electrónico del Técnico:" %>
+      <%= form.text_field :email, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :city_id, "Elija la ciudad:" %>
+      <%= form.collection_select :city_id, City.all, :id, :name, { prompt: 'Seleccione una ciudad' }, { id: 'city-select', class: 'form-control' } %>
     </div>
 
     <!-- Otros campos según la selección -->
 
-    <%= form.submit %>
+    <%= form.submit "Enviar", class: "btn btn-primary mt-2" %>
   </div>
 </div>
 <% end %>

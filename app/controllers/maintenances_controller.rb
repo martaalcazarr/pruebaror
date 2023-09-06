@@ -1,6 +1,8 @@
 class MaintenancesController < ApplicationController
   before_action :authenticate_user!
   before_action :check_permissions
+  before_action :set_maintenance, only: [:show, :edit, :update, :destroy]
+
 
   # GET /maintenances or /maintenances.json
   def index
@@ -17,12 +19,17 @@ class MaintenancesController < ApplicationController
     @maintenance = Maintenance.new
     @equipment_types = EquipmentType.all  
     @motors_for_equipment_type_1 = Motor.where(equipment_type_id: 1)  
-    @motors_for_equipment_type_2 = Motor.where(equipment_type_id: 2)  
+    @motors_for_equipment_type_2 = Motor.where(equipment_type_id: 2)
+    render 'new'
   end
 
   # GET /maintenances/1/edit
   def edit
     @maintenance = Maintenance.find(params[:id])
+    @equipment_types = EquipmentType.all  
+    @motors_for_equipment_type_1 = Motor.where(equipment_type_id: 1)  
+    @motors_for_equipment_type_2 = Motor.where(equipment_type_id: 2)
+    render 'edit'
   end
 
   # POST /maintenances or /maintenances.json
@@ -55,7 +62,7 @@ class MaintenancesController < ApplicationController
 
   # DELETE /maintenances/1 or /maintenances/1.json
   def destroy
-    if current_user.administrador?
+    if current_user.role == "administrador"
       @maintenance.destroy
       respond_to do |format|
         format.html { redirect_to maintenances_url, notice: "Maintenance was successfully destroyed." }

@@ -1,6 +1,7 @@
 class MotorsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_permissions, except: [:index, :show]
+  before_action :check_permissions
+  before_action :set_motor, only: [:show, :edit, :update, :destroy]
 
   # GET /motors or /motors.json
   def index
@@ -28,7 +29,7 @@ class MotorsController < ApplicationController
     @motor.user = current_user
 
     if @motor.save
-      redirect_to @motor, notice: 'Motor was successfully created.'
+      redirect_to @motor, notice: 'Motor creado correctamente.'
     else
       render :new
     end
