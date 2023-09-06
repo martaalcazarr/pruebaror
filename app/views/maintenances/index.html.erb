@@ -1,14 +1,28 @@
-<p style="color: green"><%= notice %></p>
+<header class="bg-primary text-white text-center py-5">
+  <h1 class="display-4">Mantenimientos</h1>
+</header>
 
-<h1>Maintenances</h1>
-
-<div id="maintenances">
-  <% @maintenances.each do |maintenance| %>
-    <%= render maintenance %>
-    <p>
-      <%= link_to "Show this maintenance", maintenance %>
-    </p>
-  <% end %>
+<div class="content">
+  <%= link_to "Crear nuevo mantenimiento", new_maintenance_path, class: "btn btn-success mt-3" %>
+  
+  <div class="row mt-4">
+    <% @maintenances.each do |maintenance| %>
+      <div class="col-12 col-md-6 col-lg-3 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><strong>Nombre del motor:</strong> <%= maintenance.motor_name %></h5>
+            <p class="card-text"><strong>Fecha:</strong> <%= maintenance.date %></p>
+            <p class="card-text"><strong>Email:</strong> <%= maintenance.email %></p>
+            <p class="card-text"><strong>Tipo de mantenimiento:</strong> <%= maintenance.maintenance_type.name %></p>
+            <p class="card-text"><strong>Ciudad:</strong> <%= maintenance.city.name %></p>
+          </div>
+          <div class="card-footer">
+            <%= link_to "Ver mantenimiento", maintenance, class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
 
-<%= link_to "New maintenance", new_maintenance_path %>
+<%= paginate @maintenances %>

@@ -1,27 +1,12 @@
-<div id="<%= dom_id motor %>">
-  <p>
-    <strong>Name:</strong>
-    <%= motor.name %>
-  </p>
+<div class="content">
+<div id="<%= dom_id motor %>" class="card mb-1"%>
 
-  <p>
-    <strong>Description:</strong>
-    <%= motor.description %>
-  </p>
-
-  <p>
-    <strong>Photo:</strong>
-    <%= motor.photo %>
-  </p>
-
-  <p>
-    <strong>User:</strong>
-    <%= motor.user_id %>
-  </p>
-
-  <p>
-    <strong>Equipment type:</strong>
-    <%= motor.equipment_type_id %>
-  </p>
-
+  <img src="<%= motor.photo %>" class="card-img-top" alt="Foto del motor">
+  <div class="card-body">
+    <h5 class="card-title"><%= motor.name %></h5>
+    <p class="card-text"><strong>Descripción:</strong> <%= motor.description %></p>
+    <p class="card-text"><strong>Usuario:</strong> <%= motor.user.email %></p>
+    <p class="card-text"><strong>Tipo de equipo:</strong> <%= motor.equipment_type.name %></p>
+  </div>
+</div>
 </div>

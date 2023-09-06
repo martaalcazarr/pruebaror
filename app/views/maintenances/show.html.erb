@@ -1,10 +1,11 @@
 <p style="color: green"><%= notice %></p>
-
-<%= render @maintenance %>
-
-<div>
-  <%= link_to "Edit this maintenance", edit_maintenance_path(@maintenance) %> |
-  <%= link_to "Back to maintenances", maintenances_path %>
-
-  <%= button_to "Destroy this maintenance", @maintenance, method: :delete %>
+<div class="content">
+<div class="card mb-4">
+  <%= render @maintenance %>
+  <div class="card-body text-center">
+    <%= link_to "Editar mantenimiento", edit_maintenance_path(@maintenance), class: "btn btn-primary mb-2" %>
+    <%= link_to "Volver a mantenimientos",  maintenances_path, class: "btn btn-secondary mb-2" %>
+    <%= button_to "Eliminar mantenimiento", @maintenance, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger mb-2" %>
+  </div>
+</div>
 </div>

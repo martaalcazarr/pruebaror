@@ -4,7 +4,7 @@ class MotorsController < ApplicationController
 
   # GET /motors or /motors.json
   def index
-    @motors = Motor.all
+    @motors = Motor.page(params[:page]) 
   end
 
   # GET /motors/1 or /motors/1.json
@@ -19,6 +19,7 @@ class MotorsController < ApplicationController
 
   # GET /motors/1/edit
   def edit
+    @motor = Motor.find(params[:id])
   end
 
   # POST /motors or /motors.json

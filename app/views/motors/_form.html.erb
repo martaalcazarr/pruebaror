@@ -1,6 +1,6 @@
 <%= form_with(model: motor) do |form| %>
   <% if motor.errors.any? %>
-    <div style="color: red">
+    <div class="alert alert-danger">
       <h2><%= pluralize(motor.errors.count, "error") %> prohibited this motor from being saved:</h2>
 
       <ul>
@@ -11,28 +11,27 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+  <div class="form-group">
+    <%= form.label :name, "Nombre" %>
+    <%= form.text_field :name, class: 'form-control' %>
   </div>
 
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_area :description %>
+  <div class="form-group">
+    <%= form.label :description, "Descripción" %>
+    <%= form.text_area :description, class: 'form-control' %>
   </div>
 
-  <div>
-    <%= form.label :photo, style: "display: block" %>
-    <%= form.text_field :photo %>
+  <div class="form-group">
+    <%= form.label :photo, "Foto" %>
+    <%= form.text_field :photo, class: 'form-control' %>
   </div>
 
-  <div>
-    <%= form.label :equipment_type_id, style: "display: block" %>
-<%= form.collection_select :equipment_type_id, EquipmentType.all, :id, :name, prompt: 'Seleccione un tipo de equipo' %>
-
+  <div class="form-group">
+    <%= form.label :equipment_type_id, "Tipo de equipo" %>
+    <%= form.collection_select :equipment_type_id, EquipmentType.all, :id, :name, { prompt: 'Seleccione un tipo de equipo' }, class: 'form-control' %>
   </div>
 
-  <div>
-    <%= form.submit %>
-  </div>
+<div class="form-group">
+  <%= form.submit class: 'btn btn-primary mt-3', value: motor.new_record? ? "Crear Motor" : "Actualizar Motor" %>
+</div>
 <% end %>

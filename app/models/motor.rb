@@ -1,4 +1,5 @@
 class Motor < ApplicationRecord
+  paginates_per 10
   belongs_to :user
   belongs_to :equipment_type
   has_many :maintenances

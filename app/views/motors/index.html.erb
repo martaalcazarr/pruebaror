@@ -1,14 +1,26 @@
-<p style="color: green"><%= notice %></p>
+<header class="bg-primary text-white text-center py-5">
+  <h1 class="display-4">Motores</h1>
+</header>
 
-<h1>Motors</h1>
-
-<div id="motors">
-  <% @motors.each do |motor| %>
-    <%= render motor %>
-    <p>
-      <%= link_to "Show this motor", motor %>
-    </p>
-  <% end %>
+<div class="content">
+  <%= link_to "Crear nuevo motor", new_motor_path, class: "btn btn-success mt-3" %>
+  <div class="row mt-4">
+    <% @motors.each do |motor| %>
+      <div class="col-12 col-md-6 col-lg-3 mb-4">
+        <div class="card">
+          <img src="<%= motor.photo %>" class="card-img-top" alt="Foto del motor">
+          <div class="card-body">
+            <h5 class="card-title"><%= motor.name %></h5>
+            <p class="card-text"><strong>Descripción:</strong> <%= motor.description %></p>
+            <p class="card-text"><strong>Usuario:</strong> <%= motor.user.email %></p>
+            <p class="card-text"><strong>Tipo de equipo:</strong> <%= motor.equipment_type.name %></p>
+          </div>
+          <div class="card-footer">
+            <%= link_to "Ver motor", motor, class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
-
-<%= link_to "New motor", new_motor_path %>
+<%= paginate @motors %>

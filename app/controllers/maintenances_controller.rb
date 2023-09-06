@@ -1,10 +1,10 @@
 class MaintenancesController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_permissions, except: [:index, :show]
+  before_action :check_permissions
 
   # GET /maintenances or /maintenances.json
   def index
-    @maintenances = Maintenance.all
+    @maintenances = Maintenance.all.page(params[:page]).per(10) # 10 elementos por página, puedes ajustar este número
   end
 
   # GET /maintenances/1 or /maintenances/1.json
@@ -22,6 +22,7 @@ class MaintenancesController < ApplicationController
 
   # GET /maintenances/1/edit
   def edit
+    @maintenance = Maintenance.find(params[:id])
   end
 
   # POST /maintenances or /maintenances.json
@@ -54,11 +55,15 @@ class MaintenancesController < ApplicationController
 
   # DELETE /maintenances/1 or /maintenances/1.json
   def destroy
-    @maintenance.destroy
-
-    respond_to do |format|
-      format.html { redirect_to maintenances_url, notice: "Maintenance was successfully destroyed." }
-      format.json { head :no_content }
+    if current_user.administrador?
+      @maintenance.destroy
+      respond_to do |format|
+        format.html { redirect_to maintenances_url, notice: "Maintenance was successfully destroyed." }
+        format.json { head :no_content }
+      end
+    else
+      flash[:error] = 'No tienes permiso para eliminar mantenimientos.'
+      redirect_back(fallback_location: root_path)
     end
   end
 

@@ -1,9 +1,14 @@
-<h1>New motor</h1>
+<header class="bg-primary text-white text-center py-5">
+  <h1 class="display-4">Nuevo motor</h1>
+</header>
 
-<%= render "form", motor: @motor %>
+  <div class="content">
+    <%= render "form", motor: @motor %>
 
-<br>
+    <br>
 
-<div>
-  <%= link_to "Back to motors", motors_path %>
-</div>
+    <div>
+      <%= link_to "Back to motors", motors_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
+

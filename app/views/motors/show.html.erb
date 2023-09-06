@@ -1,10 +1,11 @@
 <p style="color: green"><%= notice %></p>
-
-<%= render @motor %>
-
-<div>
-  <%= link_to "Edit this motor", edit_motor_path(@motor) %> |
-  <%= link_to "Back to motors", motors_path %>
-
-  <%= button_to "Destroy this motor", @motor, method: :delete %>
+<div class="content">
+<div class="card mb-4">
+  <%= render @motor %>
+  <div class="card-body text-center">
+    <%= link_to "Editar motor", edit_motor_path(@motor), class: "btn btn-primary mb-2" %>
+    <%= link_to "Volver a motores", motors_path, class: "btn btn-secondary mb-2" %>
+    <%= button_to "Eliminar motor", @motor, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger mb-2" %>
+  </div>
+</div>
 </div>

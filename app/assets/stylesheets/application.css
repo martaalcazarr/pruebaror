@@ -13,3 +13,6 @@
  *= require_tree .
  *= require_self
  */
+.content{
+    margin: 2rem; /* Puedes ajustar el valor del margen según tus preferencias */
+  }

@@ -1,32 +1,12 @@
-<div id="<%= dom_id maintenance %>">
-  <p>
-    <strong>Motor name:</strong>
-    <%= maintenance.motor_name %>
-  </p>
+<div class="content">
+  <div id="<%= dom_id maintenance %>" class="card mb-1">
+    <div class="card-body">
+      <h5 class="card-title"><strong>Nombre del motor:</strong> <%= maintenance.motor_name %></h5>
+      <p class="card-text"><strong>Fecha:</strong> <%= maintenance.date %></p>
+      <p class="card-text"><strong>Email:</strong> <%= maintenance.email %></p>
+      <p class="card-text"><strong>Tipo de mantenimiento:</strong> <%= maintenance.maintenance_type.name %></p>
+      <p class="card-text"><strong>Ciudad:</strong> <%= maintenance.city.name %></p>
 
-  <p>
-    <strong>Date:</strong>
-    <%= maintenance.date %>
-  </p>
-
-  <p>
-    <strong>Email:</strong>
-    <%= maintenance.email %>
-  </p>
-
-  <p>
-    <strong>Motor:</strong>
-    <%= maintenance.motor_id %>
-  </p>
-
-  <p>
-    <strong>Maintenance type:</strong>
-    <%= maintenance.maintenance_type_id %>
-  </p>
-
-  <p>
-    <strong>City:</strong>
-    <%= maintenance.city_id %>
-  </p>
-
+    </div>
+  </div>
 </div>
