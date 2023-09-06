@@ -1,0 +1,47 @@
+<%= form_with(model: maintenance) do |form| %>
+  <% if maintenance.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(maintenance.errors.count, "error") %> prohibited this maintenance from being saved:</h2>
+
+      <ul>
+        <% maintenance.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :motor_name, style: "display: block" %>
+    <%= form.text_field :motor_name %>
+  </div>
+
+  <div>
+    <%= form.label :date, style: "display: block" %>
+    <%= form.date_field :date %>
+  </div>
+
+  <div>
+    <%= form.label :email, style: "display: block" %>
+    <%= form.text_field :email %>
+  </div>
+
+  <div>
+    <%= form.label :motor_id, style: "display: block" %>
+    <%= form.text_field :motor_id %>
+  </div>
+
+  <div>
+    <%= form.label :maintenance_type_id, style: "display: block" %>
+    <%= form.text_field :maintenance_type_id %>
+  </div>
+
+  <div>
+    <%= form.label :city_id, style: "display: block" %>
+    <%= form.text_field :city_id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
