@@ -16,7 +16,7 @@
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
     <a class="navbar-brand" href="#">JetMaintain</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,22 +33,25 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Contacto</a>
         </li>
-
-        <% if user_signed_in? %> 
-          <% if current_user.administrador? %> 
+        
+        <% if user_signed_in? %>
+          <% if current_user.administrador? %>
             <li class="nav-item">
-              <a class="nav-link" href="#">Administrar Recursos</a>
+              <a class="nav-link" href="<%= maintenances_path %>">Mantenimientos</a>
             </li>
-          <% elsif current_user.operador? %> 
             <li class="nav-item">
-              <a class="nav-link" href="#">Generar Mantenimientos</a>
+              <a class="nav-link" href="<%= motors_path %>">Motores</a>
+            </li>
+          <% elsif current_user.operador? %>
+            <li class="nav-item">
+              <a class="nav-link" href="<%= maintenances_path %>">Mantenimientos</a>
             </li>
           <% end %>
-   <li class="nav-item">
-  <%= form_tag(destroy_user_session_path, method: :delete) do %>
-    <%= submit_tag "Cerrar Sesión", class: "nav-link", style: "background: none; border: none; cursor: pointer;" %>
-  <% end %>
-</li>
+          <li class="nav-item">
+            <%= form_tag(destroy_user_session_path, method: :delete) do %>
+              <%= submit_tag "Cerrar Sesión", class: "nav-link", style: "background: none; border: none; cursor: pointer;" %>
+            <% end %>
+          </li>
         <% else %>
           <li class="nav-item">
             <%= link_to "Iniciar Sesión", new_user_session_path, class: "nav-link" %>
