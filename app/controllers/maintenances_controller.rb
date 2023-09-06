@@ -13,6 +13,9 @@ class MaintenancesController < ApplicationController
   # GET /maintenances/new
   def new
     @maintenance = Maintenance.new
+    @equipment_types = EquipmentType.all  
+    @motors_for_equipment_type_1 = Motor.where(equipment_type_id: 1)  
+    @motors_for_equipment_type_2 = Motor.where(equipment_type_id: 2)  
   end
 
   # GET /maintenances/1/edit
@@ -65,6 +68,6 @@ class MaintenancesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def maintenance_params
-      params.require(:maintenance).permit(:motor_name, :date, :email, :motor_id, :maintenance_type_id, :city_id)
+      params.require(:maintenance).permit(:motor_id, :date, :email, :motor_id, :maintenance_type_id, :city_id)
     end
 end

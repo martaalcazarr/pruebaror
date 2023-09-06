@@ -1,3 +1,4 @@
+
 <%= form_with(model: @maintenance) do |form| %>
   <% if @maintenance.errors.any? %>
     <div style="color: red">
@@ -19,18 +20,17 @@
       <%= form.collection_select :equipment_type_id, EquipmentType.all, :id, :name, { prompt: 'Seleccione un tipo de equipo' }, { id: 'equipment-type-select' } %>
     </div>
 
-
     <%= form.button "Continuar", type: "button", id: "next-button" %>
   </div>
 
   <div id="part2" style="display: none;">
     <h3>Parte 2: Complete los detalles</h3>
 
-    <!-- Aquí coloca los campos adicionales según la selección anterior -->
     <div>
-  <%= form.label :motor_id, "Elija el nombre del motor:", style: "display: block" %>
-  <%= form.collection_select :motor_id, [], :id, :name, { prompt: 'Seleccione un motor' }, { id: 'motor-select' } %>
-</div>
+      <%= form.label :motor_id, "Elija el nombre del motor:", style: "display: block" %>
+      <%= form.select :motor_id, {}, { prompt: 'Seleccione un motor' }, { id: 'motor-select' } %>
+    </div>
+
     <div>
       <%= form.label :maintenance_type_id, "Elija el tipo de mantenimiento:", style: "display: block" %>
       <%= form.collection_select :maintenance_type_id, MaintenanceType.all, :id, :name, { prompt: 'Seleccione un tipo de mantenimiento' }, { id: 'maintenance-type-select' } %>
@@ -41,7 +41,10 @@
       <%= form.label :date, "Fecha:", style: "display: block" %>
       <%= form.date_field :date %>
     </div>
-
+<div>
+  <%= form.label :city_id, "Elija la ciudad:", style: "display: block" %>
+  <%= form.collection_select :city_id, City.all, :id, :name, { prompt: 'Seleccione una ciudad' }, { id: 'city-select' } %>
+</div>
     <!-- Ejemplo: Email -->
     <div>
       <%= form.label :email, "Correo Electrónico del Técnico:", style: "display: block" %>
@@ -54,30 +57,48 @@
   </div>
 </div>
 <% end %>
+
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  const equipmentTypeSelect = document.getElementById('equipment-type-select');
-  const motorSelect = document.getElementById('motor-select');
-  
-  // Define un objeto que mapea el tipo de equipo a los motores disponibles
-  const equipmentTypeToMotors = {
-    1: [<%= raw @motors_for_equipment_type_1.to_json %>], // Reemplaza con la lista real de motores
-    2: [<%= raw @motors_for_equipment_type_2.to_json %>], // Reemplaza con la lista real de motores
-    // Agrega más tipos de equipo y motores según sea necesario
-  };
+  document.addEventListener('DOMContentLoaded', function() {
+    const equipmentTypeSelect = document.getElementById('equipment-type-select');
+    const motorSelect = document.getElementById('motor-select');
+    const part2 = document.getElementById('part2');
 
-  // Función para actualizar las opciones del campo de selección de motores
-  function updateMotorOptions() {
-    const selectedEquipmentType = equipmentTypeSelect.value;
-    const motors = equipmentTypeToMotors[selectedEquipmentType] || [];
-    const optionsHtml = motors.map(motor => `<option value="${motor.id}">${motor.name}</option>`).join('');
-    motorSelect.innerHTML = `<option value="">Seleccione un motor</option>${optionsHtml}`;
-  }
+    // Define un objeto que mapea el tipo de equipo a los motores disponibles
+    const equipmentTypeToMotors = {
+      1: <%= raw @motors_for_equipment_type_1.to_json %>,
+      2: <%= raw @motors_for_equipment_type_2.to_json %>,
+    };
 
-  // Escucha los cambios en el campo de selección de tipo de equipo
-  equipmentTypeSelect.addEventListener('change', updateMotorOptions);
+    // Función para actualizar las opciones del campo de selección de motores
+    function updateMotorOptions() {
+      const selectedEquipmentType = equipmentTypeSelect.value;
+      const motors = equipmentTypeToMotors[selectedEquipmentType] || [];
+      const motorSelectOptions = motorSelect.options;
 
-  // Llama a la función inicialmente para configurar las opciones iniciales
-  updateMotorOptions();
-});
+      // Elimina las opciones anteriores
+      while (motorSelectOptions.length > 0) {
+        motorSelectOptions.remove(0);
+      }
+
+      // Agrega las nuevas opciones
+      motors.forEach(function(motor) {
+        const option = new Option(motor.name, motor.id);
+        motorSelect.appendChild(option);
+      });
+
+      // Mostrar u ocultar la parte 2 según la selección del tipo de equipo
+      if (selectedEquipmentType !== "") {
+        part2.style.display = "block";
+      } else {
+        part2.style.display = "none";
+      }
+    }
+
+    // Escucha los cambios en el campo de selección de tipo de equipo
+    equipmentTypeSelect.addEventListener('change', updateMotorOptions);
+
+    // Llama a la función inicialmente para configurar las opciones iniciales
+    updateMotorOptions();
+  });
 </script>
