@@ -3,7 +3,8 @@
 </header>
 
 <div class="content">
-  <%= link_to "Crear nuevo mantenimiento", new_maintenance_path, class: "btn btn-success mt-3" %>
+  <a href="<%= new_maintenance_path %>" class="btn btn-success mt-3">Crear nuevo mantenimiento</a>
+
   
   <div class="row mt-4">
     <% @maintenances.each do |maintenance| %>
@@ -15,6 +16,14 @@
             <p class="card-text"><strong>Email:</strong> <%= maintenance.email %></p>
             <p class="card-text"><strong>Tipo de mantenimiento:</strong> <%= maintenance.maintenance_type.name %></p>
             <p class="card-text"><strong>Ciudad:</strong> <%= maintenance.city.name %></p>
+           <p class="card-text"><strong>Materiales:</strong>
+              <% maintenance.materials.each_with_index do |material, index| %>
+                <%= material.name %>
+                <% unless index == maintenance.materials.size - 1 %>
+                  ,
+                <% end %>
+              <% end %>
+            </p>
           </div>
           <div class="card-footer">
             <%= link_to "Ver mantenimiento", maintenance, class: "btn btn-primary" %>

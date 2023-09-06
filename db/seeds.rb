@@ -22,6 +22,14 @@ User.find_or_create_by(email: 'admin@example.com') do |user|
   cities.each do |city_name|
     City.find_or_create_by(name: city_name)
   end
+
+  #materiales
+  materials = ['Turbinas', 'Sistemas de ignición', 'Sistemas de combustible']
+  materials.each do |material_name|
+    Material.find_or_create_by(name: material_name)
+  end 
+  
+  
 # Crear 10 motores de tipo "Motor a reacción" con el user admin
 10.times do |n|
   name = "REAC-#{n + 1}"

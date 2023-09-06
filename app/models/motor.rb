@@ -2,7 +2,7 @@ class Motor < ApplicationRecord
   paginates_per 10
   belongs_to :user
   belongs_to :equipment_type
-  has_many :maintenances
+  has_many :maintenances, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true
   validates :description, presence: true

@@ -75,4 +75,3 @@ gem "devise", "~> 4.9"
 
 gem "kaminari", "~> 1.2"
 
-gem "erb-formatter", "~> 0.4.3"

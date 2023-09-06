@@ -6,7 +6,12 @@
       <p class="card-text"><strong>Email:</strong> <%= maintenance.email %></p>
       <p class="card-text"><strong>Tipo de mantenimiento:</strong> <%= maintenance.maintenance_type.name %></p>
       <p class="card-text"><strong>Ciudad:</strong> <%= maintenance.city.name %></p>
-
+      <p class="card-text"><strong>Materiales:</strong></p>
+      <ul>
+        <% maintenance.materials.each do |material| %>
+          <li><%= material.name %></li>
+        <% end %>
+      </ul>
     </div>
   </div>
 </div>

@@ -33,7 +33,6 @@
       <%= form.collection_select :maintenance_type_id, MaintenanceType.all, :id, :name, { prompt: 'Seleccione un tipo de mantenimiento' }, { id: 'maintenance-type-select', class: 'form-control' } %>
     </div>
 
-    <!-- Ejemplo: Date -->
     <div class="form-group">
       <%= form.label :date, "Fecha:" %>
       <%= form.date_field :date, class: 'form-control' %>
@@ -48,55 +47,59 @@
       <%= form.label :city_id, "Elija la ciudad:" %>
       <%= form.collection_select :city_id, City.all, :id, :name, { prompt: 'Seleccione una ciudad' }, { id: 'city-select', class: 'form-control' } %>
     </div>
+    
+    
+  <div class="form-group">
+    <%= form.label :materials, "Materiales utilizados:" %>
+    <%= form.collection_check_boxes :material_ids, Material.all, :id, :name do |cb| %>
+      <div class="form-check">
+        <%= cb.check_box(class: 'form-check-input') %>
+        <%= cb.label(class: 'form-check-label') %>
+      </div>
+    <% end %>
+  </div>
 
-    <!-- Otros campos según la selección -->
 
     <%= form.submit "Enviar", class: "btn btn-primary mt-2" %>
   </div>
 </div>
 <% end %>
-
 <script>
+
   document.addEventListener('DOMContentLoaded', function() {
-    const equipmentTypeSelect = document.getElementById('equipment-type-select');
-    const motorSelect = document.getElementById('motor-select');
-    const part2 = document.getElementById('part2');
 
-    // Define un objeto que mapea el tipo de equipo a los motores disponibles
-    const equipmentTypeToMotors = {
-      1: <%= raw @motors_for_equipment_type_1.to_json %>,
-      2: <%= raw @motors_for_equipment_type_2.to_json %>,
-    };
+      const equipmentTypeSelect = document.getElementById('equipment-type-select');
+      const motorSelect = document.getElementById('motor-select');
+      const part2 = document.getElementById('part2');
 
-    // Función para actualizar las opciones del campo de selección de motores
-    function updateMotorOptions() {
-      const selectedEquipmentType = equipmentTypeSelect.value;
-      const motors = equipmentTypeToMotors[selectedEquipmentType] || [];
-      const motorSelectOptions = motorSelect.options;
+      const equipmentTypeToMotors = {
+        1: <%= raw @motors_for_equipment_type_1.to_json %>,
+        2: <%= raw @motors_for_equipment_type_2.to_json %>,
+      };
 
-      // Elimina las opciones anteriores
-      while (motorSelectOptions.length > 0) {
-        motorSelectOptions.remove(0);
+      function updateMotorOptions() {
+        const selectedEquipmentType = equipmentTypeSelect.value;
+        const motors = equipmentTypeToMotors[selectedEquipmentType] || [];
+        const motorSelectOptions = motorSelect.options;
+
+        while (motorSelectOptions.length > 0) {
+          motorSelectOptions.remove(0);
+        }
+
+        motors.forEach(function(motor) {
+          const option = new Option(motor.name, motor.id);
+          motorSelect.appendChild(option);
+        });
+
+        if (selectedEquipmentType !== "") {
+          part2.style.display = "block";
+        } else {
+          part2.style.display = "none";
+        }
       }
 
-      // Agrega las nuevas opciones
-      motors.forEach(function(motor) {
-        const option = new Option(motor.name, motor.id);
-        motorSelect.appendChild(option);
-      });
+      equipmentTypeSelect.addEventListener('change', updateMotorOptions);
 
-      // Mostrar u ocultar la parte 2 según la selección del tipo de equipo
-      if (selectedEquipmentType !== "") {
-        part2.style.display = "block";
-      } else {
-        part2.style.display = "none";
-      }
-    }
-
-    // Escucha los cambios en el campo de selección de tipo de equipo
-    equipmentTypeSelect.addEventListener('change', updateMotorOptions);
-
-    // Llama a la función inicialmente para configurar las opciones iniciales
-    updateMotorOptions();
-  });
+      updateMotorOptions();
+    });
 </script>
