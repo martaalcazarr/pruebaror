@@ -1,29 +1,52 @@
-# Prueba certificación RoR - Marta Alcázar
+# Prueba de Certificación RoR - Marta Alcázar
 
-Proyecto en Ruby on Rails para certificación Talento Digital. Realizado con Ruby on Rails, bootstrap y las gemas Devise y Kaminari.
-Proyecto para empresa ficticia JetMaintain, dedicada al mantenimiento de motores de avión. Permite a sus usuarios gestionar los mantenimientos a los motores de dicha empresa.
+Este proyecto en Ruby on Rails ha sido desarrollado para la certificación de Talento Digital. Está construido utilizando Ruby on Rails, Bootstrap y las gemas Devise, Faker y Kaminari.
 
-Para ejecutar este proyecto:
-Clonar git
-2. Editar el archivo config/database.yml con tus credenciales para la base de datos
-3. rails db:create
-4. rails db:seed
-5. rails s -b 0.0.0.0
+## Descripción del Proyecto
 
-El proyecto inicia en el indice que contiene una breve descripción, desde la barra de navegación es posible acceder a Términos y condiciones, registrarse e iniciar sesión. 
-El proyecto permite registrarse como usuario con el rol "operador" por defecto. Vienen dos usuarios que se crean después del seed, para poder utilizar un usuario "administrador". Estos son:
-(email: 'admin@example.com') 
-    user.password = '123456'
-    user.role = 'administrador'
+El proyecto está diseñado para la empresa ficticia "JetMaintain", la cual se dedica al mantenimiento de motores de avión. Permite a los usuarios gestionar los mantenimientos de los motores de la empresa.
 
-  
-(email: 'op@example.com') 
-    user.password = '123456'
-    user.role = 'operador'
-Al iniciar sesión, el administrador tiene acceso a motores y mantenimientos en su totalidad, pero el operador solo a mantenimientos (y no puede eliminarlos, solo crear y editar)
+## Ejecución del Proyecto
 
-Para crear un nuevo mantenimiento, el script no se logra ejecutar si no se recarga la página (no solucionado), al recargar funciona y pueden crearse. Primero debe elegirse el tipo de motor, para que se desplieguen las demás opciones (según el tipo de motor, se puede elegir entre los motores disponibles).
+Para ejecutar este proyecto, sigue los siguientes pasos:
 
-Para crear un nuevo motor, el nombre debe respetar la estructura REAC-n o TURBO-n. 
+1. Clona el repositorio desde GitHub.
+2. Edita el archivo `config/database.yml` con tus credenciales para la base de datos.
+3. Ejecuta `rails db:create` para crear la base de datos.
+4. Ejecuta `rails db:seed` para poblar la base de datos con datos iniciales.
+5. Ejecuta `rails s -b 0.0.0.0` para iniciar el servidor Rails.
 
-Para editar un mantenimiento, el nombre y tipo de motor no pueden ser editados. 
+## Funcionalidades Principales
+
+El proyecto incluye las siguientes funcionalidades principales:
+
+- Registro e inicio de sesión de usuarios.
+- Roles de usuario: "administrador" y "operador".
+- Dos usuarios predefinidos para el rol de "administrador" y "operador":
+
+    - **Administrador**
+        - Email: admin@example.com
+        - Contraseña: 123456
+        - Rol: administrador
+
+    - **Operador**
+        - Email: op@example.com
+        - Contraseña: 123456
+        - Rol: operador
+
+- Panel de administrador con acceso total a motores y mantenimientos.
+- Panel de operador con acceso solo a mantenimientos (sin capacidad para eliminar).
+- Creación y edición de mantenimientos, incluyendo la selección del tipo de motor.
+- Creación de nuevos motores siguiendo la estructura REAC-n o TURBO-n.
+- Edición de mantenimientos (con limitación en la edición del nombre y tipo de motor).
+
+## Nota sobre la Creación de Mantenimientos
+
+Es importante tener en cuenta que, para crear un nuevo mantenimiento, es posible que necesites recargar la página debido a un problema conocido. Al recargar la página, deberías poder crear mantenimientos correctamente. Recuerda que primero debes seleccionar el tipo de motor antes de elegir entre los motores disponibles.
+
+## Notas Adicionales
+
+Asegúrate de tener Ruby on Rails correctamente instalado en tu entorno de desarrollo antes de ejecutar este proyecto.
+
+¡Disfruta explorando y utilizando esta aplicación de gestión de mantenimientos de motores de avión!
+
